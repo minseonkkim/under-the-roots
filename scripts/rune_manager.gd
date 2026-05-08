@@ -28,9 +28,6 @@ func draw_three(_floor_num: int = 1) -> Array[String]:
 		var def: Dictionary = _definitions[id]
 		if _active.get(id, 0) < int(def.get("stack_limit", 3)):
 			pool.append(id)
-	# Fall back to full list if everything is maxed
-	if pool.size() == 0:
-		pool = Array(_definitions.keys())
 	pool.shuffle()
 	var result: Array[String] = []
 	for id: String in pool:

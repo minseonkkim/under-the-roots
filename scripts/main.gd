@@ -70,6 +70,9 @@ func _on_room_cleared() -> void:
 
 func _show_rune_pick() -> void:
 	var picks := _rune_manager.draw_three(_current_room)
+	if picks.is_empty():
+		_spawn_portal()
+		return
 	var ui := RunePickUI.new()
 	ui.setup(_rune_manager, picks)
 	add_child(ui)
