@@ -6,6 +6,7 @@ extends Node2D
 const PORTAL_SCENE: PackedScene = preload("res://scenes/portal.tscn")
 
 @onready var player: Player = $Player
+@onready var background: Polygon2D = $Background
 @onready var joystick: Node = $UI/VirtualJoystick
 @onready var skill_button: Node = $UI/SkillButton
 @onready var hud: HUD = $HUD
@@ -50,6 +51,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if _running:
 		_run_time += delta
+	background.position = player.global_position
 
 func _start_room() -> void:
 	_running = true
