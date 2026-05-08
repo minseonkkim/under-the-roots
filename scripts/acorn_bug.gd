@@ -48,6 +48,7 @@ func _physics_process(delta: float) -> void:
 		var to_player: Vector2 = player.global_position - global_position
 		if to_player.length() > 1.0:
 			velocity = to_player.normalized() * move_speed
+			$AnimatedSprite2D.flip_h = to_player.x < 0
 		else:
 			velocity = Vector2.ZERO
 	move_and_slide()
