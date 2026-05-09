@@ -25,9 +25,15 @@ var _charge_time: float = 0.0
 signal died(boss: Node)
 signal hp_changed(current_hp: int, max_hp: int)
 
-const ENEMY_PROJ_SCENE: PackedScene = preload("res://scenes/enemy_projectile.tscn")
+const ENEMY_PROJ_SCENE: PackedScene = preload("res://scenes/acorn_king_projectile.tscn")
 const ACORN_BUG_SCENE: PackedScene = preload("res://scenes/acorn_bug.tscn")
 const SPIKE_ZONE_SCENE: PackedScene = preload("res://scenes/spike_zone.tscn")
+
+const PHASE_FRAMES: Array = [
+	preload("res://resources/sprite_frames/acron_king_phase1.tres"),
+	preload("res://resources/sprite_frames/acron_king_phase2.tres"),
+	preload("res://resources/sprite_frames/acron_king_phase3.tres"),
+]
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -67,8 +73,10 @@ func _ai_phase1(delta: float, player: Node2D) -> void:
 	var to_player: Vector2 = player.global_position - global_position
 	if to_player.length() > 80.0:
 		velocity = to_player.normalized() * move_speed
+		_play_anim("walk")
 	else:
 		velocity = to_player.normalized().rotated(PI * 0.45) * move_speed
+		_play_anim("idle")
 	_flip_to(to_player)
 
 	if _shoot_cd <= 0.0:
@@ -91,7 +99,12 @@ func _ai_phase2(delta: float, player: Node2D) -> void:
 		return
 
 	var to_player: Vector2 = player.global_position - global_position
-	velocity = to_player.normalized() * (move_speed * 1.25) if to_player.length() > 50.0 else Vector2.ZERO
+	if to_player.length() > 50.0:
+		velocity = to_player.normalized() * (move_speed * 1.25)
+		_play_anim("walk")
+	else:
+		velocity = Vector2.ZERO
+		_play_anim("idle")
 	_flip_to(to_player)
 
 	if _shoot_cd <= 0.0:
@@ -118,7 +131,12 @@ func _ai_phase3(delta: float, player: Node2D) -> void:
 		return
 
 	var to_player: Vector2 = player.global_position - global_position
-	velocity = to_player.normalized() * move_speed if to_player.length() > 30.0 else Vector2.ZERO
+	if to_player.length() > 30.0:
+		velocity = to_player.normalized() * move_speed
+		_play_anim("walk")
+	else:
+		velocity = Vector2.ZERO
+		_play_anim("idle")
 	_flip_to(to_player)
 
 	if _shoot_cd <= 0.0:
@@ -170,6 +188,11 @@ func _spawn_spike_zones(near: Vector2) -> void:
 		zone.global_position = near + offset
 		get_tree().current_scene.add_child(zone)
 
+func _play_anim(anim: String) -> void:
+	var spr := get_node_or_null("AnimatedSprite2D")
+	if spr != null and spr.animation != anim:
+		spr.play(anim)
+
 func _flip_to(dir: Vector2) -> void:
 	if dir.x == 0.0:
 		return
@@ -200,6 +223,7 @@ func take_damage(amount: int, dmg_type: int = Combat.DamageType.PHYSICAL) -> voi
 	var actual: int = Combat.calculate_damage(amount, dmg_type, defense)
 	current_hp = max(current_hp - actual, 0)
 	hp_changed.emit(current_hp, max_hp)
+	_play_anim("hit")
 	_check_phase_change()
 	if current_hp <= 0:
 		_die()
@@ -222,7 +246,8 @@ func _apply_phase(new_phase: int) -> void:
 			_shoot_cd = minf(_shoot_cd, 1.0)
 			_summon_cd = minf(_summon_cd, 2.0)
 			if spr != null:
-				spr.modulate = Color(1.0, 0.7, 0.3)
+				spr.sprite_frames = PHASE_FRAMES[1]
+				spr.play("idle")
 		3:
 			move_speed = move_speed * 1.5
 			acorn_damage = int(acorn_damage * 1.5)
@@ -230,10 +255,15 @@ func _apply_phase(new_phase: int) -> void:
 			_shoot_cd = minf(_shoot_cd, 0.8)
 			_spike_cd = minf(_spike_cd, 1.0)
 			if spr != null:
-				spr.modulate = Color(1.0, 0.3, 0.3)
+				spr.sprite_frames = PHASE_FRAMES[2]
+				spr.play("idle")
 
 func _die() -> void:
 	_active = false
 	set_physics_process(false)
+	var spr := get_node_or_null("AnimatedSprite2D")
+	if spr != null:
+		spr.play("death")
+		await spr.animation_finished
 	visible = false
 	died.emit(self)

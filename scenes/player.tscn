@@ -36,7 +36,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1801226367]
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.70, 0.70)
 sprite_frames = ExtResource("2")
 animation = &"idle"
 autoplay = "idle"

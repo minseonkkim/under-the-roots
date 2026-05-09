@@ -1,0 +1,171 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" uid="uid://caw1aijbh8r7v" path="res://assets/sprites/enemies/acron_king_phase3.png" id="1_tex"]
+
+[sub_resource type="AtlasTexture" id="i0"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="i1"]
+atlas = ExtResource("1_tex")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="i2"]
+atlas = ExtResource("1_tex")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="i3"]
+atlas = ExtResource("1_tex")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="w0"]
+atlas = ExtResource("1_tex")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="w1"]
+atlas = ExtResource("1_tex")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="w2"]
+atlas = ExtResource("1_tex")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="w3"]
+atlas = ExtResource("1_tex")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="a0"]
+atlas = ExtResource("1_tex")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="a1"]
+atlas = ExtResource("1_tex")
+region = Rect2(1152, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="a2"]
+atlas = ExtResource("1_tex")
+region = Rect2(1280, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="a3"]
+atlas = ExtResource("1_tex")
+region = Rect2(1408, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="h0"]
+atlas = ExtResource("1_tex")
+region = Rect2(1536, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="h1"]
+atlas = ExtResource("1_tex")
+region = Rect2(1664, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="h2"]
+atlas = ExtResource("1_tex")
+region = Rect2(1792, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="h3"]
+atlas = ExtResource("1_tex")
+region = Rect2(1920, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="d0"]
+atlas = ExtResource("1_tex")
+region = Rect2(2048, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="d1"]
+atlas = ExtResource("1_tex")
+region = Rect2(2176, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="d2"]
+atlas = ExtResource("1_tex")
+region = Rect2(2304, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="d3"]
+atlas = ExtResource("1_tex")
+region = Rect2(2432, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("a0")
+}, {
+"duration": 1.0,
+"texture": SubResource("a1")
+}, {
+"duration": 1.0,
+"texture": SubResource("a2")
+}, {
+"duration": 1.0,
+"texture": SubResource("a3")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("d0")
+}, {
+"duration": 1.0,
+"texture": SubResource("d1")
+}, {
+"duration": 1.0,
+"texture": SubResource("d2")
+}, {
+"duration": 1.0,
+"texture": SubResource("d3")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("h0")
+}, {
+"duration": 1.0,
+"texture": SubResource("h1")
+}, {
+"duration": 1.0,
+"texture": SubResource("h2")
+}, {
+"duration": 1.0,
+"texture": SubResource("h3")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("i0")
+}, {
+"duration": 1.0,
+"texture": SubResource("i1")
+}, {
+"duration": 1.0,
+"texture": SubResource("i2")
+}, {
+"duration": 1.0,
+"texture": SubResource("i3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("w0")
+}, {
+"duration": 1.0,
+"texture": SubResource("w1")
+}, {
+"duration": 1.0,
+"texture": SubResource("w2")
+}, {
+"duration": 1.0,
+"texture": SubResource("w3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
