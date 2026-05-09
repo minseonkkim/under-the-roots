@@ -9,6 +9,7 @@ class_name AngrySquirrel
 @export var contact_cooldown: float = 0.5
 @export var dash_interval: float = 3.0
 
+var element: int = Combat.Element.NATURE
 var current_hp: int
 var _attack_cd: float = 0.0
 var _dash_cd: float = 1.5
@@ -97,10 +98,10 @@ func _check_contact_damage() -> void:
 			_attack_cd = contact_cooldown
 			return
 
-func take_damage(amount: int, dmg_type: int = Combat.DamageType.PHYSICAL) -> void:
+func take_damage(amount: int, dmg_type: int = Combat.DamageType.PHYSICAL, attacker_elem: int = Combat.Element.NONE) -> void:
 	if not _active:
 		return
-	var actual: int = Combat.calculate_damage(amount, dmg_type, defense)
+	var actual: int = Combat.calculate_damage(amount, dmg_type, defense, attacker_elem, element)
 	current_hp -= actual
 	if current_hp <= 0:
 		deactivate()

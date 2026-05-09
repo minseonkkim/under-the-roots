@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dplioosghk1ty"
-path="res://.godot/imported/acorn_king_phase2.png-ddf6c2445433cf980802b0bada825b7b.ctex"
+path="res://.godot/imported/acorn_king_phase2.png-4aafaa479ddf062afb58db8bd5e46477.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/sprites/enemies/acorn_king_phase2.png"
-dest_files=["res://.godot/imported/acorn_king_phase2.png-ddf6c2445433cf980802b0bada825b7b.ctex"]
+dest_files=["res://.godot/imported/acorn_king_phase2.png-4aafaa479ddf062afb58db8bd5e46477.ctex"]
 
 [params]
 

@@ -7,6 +7,7 @@ class_name Projectile
 @export var damage_type: int = 0
 
 var direction: Vector2 = Vector2.RIGHT
+var attacker_element: int = Combat.Element.NONE
 var _life: float = 0.0
 
 func _ready() -> void:
@@ -34,5 +35,5 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _try_hit(node: Node) -> void:
 	if node.is_in_group("enemies") and node.has_method("take_damage"):
-		node.take_damage(damage, damage_type)
+		node.take_damage(damage, damage_type, attacker_element)
 		queue_free()

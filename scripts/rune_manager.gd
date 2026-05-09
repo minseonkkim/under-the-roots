@@ -67,6 +67,10 @@ func _apply_effect(def: Dictionary, player: Player) -> void:
 		"thorn_reflect":
 			var stack: int = _active.get(def.get("id", ""), 0)
 			player.thorn_factor = value * float(stack)
+		"crit_rate_bonus":
+			player.crit_rate = minf(player.crit_rate + value, 0.95)
+		"crit_damage_bonus":
+			player.crit_damage += value
 
 func get_active() -> Dictionary:
 	return _active

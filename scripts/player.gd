@@ -8,6 +8,9 @@ class_name Player
 @export var attack_speed: float = 1.2
 @export var attack_range: float = 120.0
 @export var skill_cooldown: float = 8.0
+@export var crit_rate: float = 0.05
+@export var crit_damage: float = 1.5
+@export var element: int = Combat.Element.NATURE
 
 var current_hp: int
 var base_attack_damage: int = 0
@@ -130,8 +133,10 @@ func _spawn_projectile(target: Node2D) -> void:
 	p.global_position = global_position
 	var dir: Vector2 = (target.global_position - global_position).normalized()
 	p.set_direction(dir)
-	p.damage = attack_damage
+	var crit_mult: float = Combat.roll_crit(crit_rate, crit_damage)
+	p.damage = maxi(1, int(round(float(attack_damage) * crit_mult)))
 	p.damage_type = Combat.DamageType.PHYSICAL
+	p.attacker_element = element
 	get_tree().current_scene.add_child(p)
 
 func use_skill() -> void:
@@ -149,7 +154,9 @@ func use_skill() -> void:
 	var acorn := ROLLING_ACORN_SCENE.instantiate()
 	acorn.global_position = global_position
 	acorn.set_direction(dir)
-	acorn.damage = attack_damage * 2
+	var crit_mult: float = Combat.roll_crit(crit_rate, crit_damage)
+	acorn.damage = maxi(1, int(round(float(attack_damage) * 2.0 * crit_mult)))
+	acorn.attacker_element = element
 	get_tree().current_scene.add_child(acorn)
 	_skill_cd = skill_cooldown
 	skill_cooldown_changed.emit(_skill_cd, skill_cooldown)

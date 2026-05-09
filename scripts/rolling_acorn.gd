@@ -9,6 +9,7 @@ class_name RollingAcorn
 @export var max_pierce: int = 5
 
 var direction: Vector2 = Vector2.RIGHT
+var attacker_element: int = Combat.Element.NONE
 var _life: float = 0.0
 var _hit_log: Dictionary = {}
 var _hits: int = 0
@@ -43,5 +44,5 @@ func _try_hit(node: Node) -> void:
 	if _hit_log.has(id) and now - float(_hit_log[id]) < rehit_interval:
 		return
 	_hit_log[id] = now
-	node.take_damage(damage, damage_type)
+	node.take_damage(damage, damage_type, attacker_element)
 	_hits += 1

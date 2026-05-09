@@ -8,6 +8,7 @@ class_name GrassGoblin
 @export var shoot_interval: float = 2.2
 @export var preferred_distance: float = 110.0
 
+var element: int = Combat.Element.NATURE
 var current_hp: int
 var _shoot_cd: float = 1.0
 var _active: bool = false
@@ -82,10 +83,10 @@ func _get_player() -> Node2D:
 			return p as Node2D
 	return null
 
-func take_damage(amount: int, dmg_type: int = Combat.DamageType.PHYSICAL) -> void:
+func take_damage(amount: int, dmg_type: int = Combat.DamageType.PHYSICAL, attacker_elem: int = Combat.Element.NONE) -> void:
 	if not _active:
 		return
-	var actual: int = Combat.calculate_damage(amount, dmg_type, defense)
+	var actual: int = Combat.calculate_damage(amount, dmg_type, defense, attacker_elem, element)
 	current_hp -= actual
 	if current_hp <= 0:
 		deactivate()
