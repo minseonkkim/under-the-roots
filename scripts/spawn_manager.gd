@@ -14,6 +14,7 @@ var _kills: int = 0
 var _spawned_in_room: int = 0
 var _spawn_timer: Timer
 var _running: bool = false
+var _recent_angles: Array[float] = []
 
 signal enemy_killed(total_kills: int)
 signal room_cleared
@@ -60,6 +61,7 @@ func start_room(player: Node2D) -> void:
 	_kills = 0
 	_spawned_in_room = 0
 	_running = true
+	_recent_angles.clear()
 	_spawn_initial_burst(4)
 	_spawn_timer.start()
 
@@ -71,8 +73,9 @@ func stop() -> void:
 			e.deactivate()
 
 func _spawn_initial_burst(count: int) -> void:
+	var offset: float = randf() * TAU
 	for i in count:
-		var angle: float = (TAU / count) * i
+		var angle: float = offset + (TAU / count) * i
 		_spawn_at_angle(angle)
 
 func _on_spawn_tick() -> void:
@@ -82,7 +85,23 @@ func _on_spawn_tick() -> void:
 		return
 	if _alive_count() >= max_alive:
 		return
-	_spawn_at_angle(randf() * TAU)
+	_spawn_at_angle(_pick_spread_angle())
+
+func _pick_spread_angle() -> float:
+	const MIN_SPREAD: float = PI / 3.0  # 60도 이내 연속 스폰 방지
+	for _attempt in 8:
+		var angle: float = randf() * TAU
+		var ok := true
+		for prev in _recent_angles:
+			if absf(wrapf(angle - prev, -PI, PI)) < MIN_SPREAD:
+				ok = false
+				break
+		if ok:
+			_recent_angles.append(angle)
+			if _recent_angles.size() > 4:
+				_recent_angles.pop_front()
+			return angle
+	return randf() * TAU
 
 func _spawn_at_angle(angle: float) -> void:
 	if _spawned_in_room >= room_quota:
